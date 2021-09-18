@@ -1,8 +1,9 @@
 ARG IMAGE
-ARG MAJOR_VERSION
-ARG MINOR_VERSION
 
 FROM $IMAGE
+
+ARG MAJOR_VERSION
+ARG MINOR_VERSION
 
 USER root
 
@@ -16,6 +17,7 @@ RUN  apt install -y debhelper
 RUN  apt install -y build-essential
 RUN  apt install -y zlib1g-dev
 RUN  apt install -y software-properties-common
+RUN apt install -y lsb-core
 
 RUN add-apt-repository ppa:zeehio/libxp
 RUN apt update
@@ -40,8 +42,6 @@ RUN rm maya.tgz
 # convert rpm packages to debian
 WORKDIR /maya/Packages
 RUN alien -vc *.rpm
-
-RUN apt install -y lsb-core
 
 # install maya packages
 RUN apt install -y ./adlmapps*_amd64.deb
